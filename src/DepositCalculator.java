@@ -1,11 +1,13 @@
+import java.util.Scanner;
+
 public class DepositCalculator {
-    double calculateComplexPercent(double amount, double yearRate, int periodInYears) {
-        double pay = amount * Math.pow((1 + yearRate / 12), 12 * periodInYears);
+    double calculateComplexPercent(double depositAmount, double yearRate, int periodInYears) {
+        double pay = depositAmount * Math.pow((1 + yearRate / 12), 12 * periodInYears);
         return searchRound(pay, 2);
     }
 
-    double calculateSimplePercent(double amount, double yearRate, int depositPeriod) {
-        return searchRound(amount + amount * yearRate * depositPeriod, 2);
+    double calculateSimplePercent(double depositAmount, double yearRate, int depositPeriod) {
+        return searchRound(depositAmount + depositAmount * yearRate * depositPeriod, 2);
     }
 
     double searchRound(double value, int places) {
@@ -14,24 +16,26 @@ public class DepositCalculator {
     }
 
     void calculateContribution() {
+        int depositAmount;
         int periodInYears;
-        int action;
+        int depositType;
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите сумму вклада в рублях:") ;
-        int amount = scanner.nextInt();
+        depositAmount = scanner.nextInt();
         System.out.println("Введите срок вклада в годах:") ;
         periodInYears = scanner.nextInt();
         System.out.println("Выберите тип вклада, 1 - вклад с обычным процентом, 2 - вклад с капитализацией:");
-        action = scanner.nextInt();
-        double out = 0;
-        if (action == 1) {
-            out = calculateSimplePercent(amount, 0.06, periodInYears);
-        } else if (action == 2) {
-            out = calculateComplexPercent(amount, 0.06, periodInYears);
+        depositType = scanner.nextInt();
+        double result = 0;
+        if (depositType == 1) {
+            result = calculateSimplePercent(depositAmount, 0.06, periodInYears);
+        } else if (depositType == 2) {
+            result = calculateComplexPercent(depositAmount, 0.06, periodInYears);
         }
-        System.out.println("Результат вклада: " + amount + " за " + periodInYears + " лет превратятся в " + out);
+        System.out.println("Результат вклада: " + depositAmount + " за " + periodInYears + " лет превратятся в " + result);
     }
+
     public static void main(String[] args) {
         new DepositCalculator().calculateContribution();
     }
